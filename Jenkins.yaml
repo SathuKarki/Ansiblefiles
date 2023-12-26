@@ -1,0 +1,30 @@
+- hosts: jenkins
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: Add repository jenkins
+    yum_repository:
+      name: Jenkins yum repo
+      description: Jenkins yum repo
+      baseurl: http://pkg.jenkins.io/redhat-stable
+      gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest 
+  - name: Install java tools on to server
+    yum:
+      name: java
+      state: present
+
+  - name: installing jenkins software   #it takes some time while downloading jenkins be Subtle
+    yum:
+       name: jenkins
+       state: present
+
+  - name: Start service jenkins, if not started
+    service:
+      name: jenkins
+      state: started 
+
+
