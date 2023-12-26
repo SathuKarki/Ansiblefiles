@@ -1,0 +1,12 @@
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: Install tools on to server
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+     - unzip
+     - git
+     - http_prese
